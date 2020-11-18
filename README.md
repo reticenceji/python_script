@@ -6,4 +6,5 @@
 | file_ext_change.py | 批量修改文件后缀名               | os,os.path,argparse |
 | recur_zip.py       | 递归解压缩文件                   | zipfile,os          |
 | FormatString.py    | 生成有格式化字符串漏洞的payload  | argparse            |
+| zhongkao.py        | 爬取一个中考资料网站的文件       | re,requests         |
 

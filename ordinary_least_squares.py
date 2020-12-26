@@ -1,6 +1,8 @@
 ##最小二乘法
 import numpy as np   ##科学计算库 
 import scipy as sp   ##在numpy基础上实现的部分算法库
+import matplotlib
+matplotlib.use("tkAgg")
 import matplotlib.pyplot as plt  ##绘图库
 from scipy.optimize import leastsq  ##引入最小二乘法算法
 
@@ -25,8 +27,8 @@ def main():
     设置样本数据，真实数据需要在这里处理
     '''
     # 样本数据(Xi,Yi)，需要转换成数组(列表)形式
-    Xi=np.arange(30,70,5)
-    Yi=np.array([56.55,57.50,58.53,59.60,60.65,61.73,62.74,63.87])
+    Xi=np.array([15.1,19.9,25.6,30.4,37.2,41.5,46.2,49.5])
+    Yi=np.array([46.2,47,48.05,49,50,51,51.9,52.5])
 
     # p0表示k,b的初始值，可以任意设定,发现p0的值会影响cost的值：Para[1]
     # leastsq是scipy提供的最小二乘函数
@@ -39,25 +41,29 @@ def main():
     k,b=Para[0]
     print("cost："+str(Para[1]))
     print("求解的拟合直线为:")
-    print("y="+str(round(k,2))+"x+"+str(round(b,2)))
+    print("y="+str(round(k,4))+"x+"+str(round(b,2)))
+    print("alpha={}",k/b)
 
     #画散点图，样本点
     plt.figure(figsize=(8,6)) ##指定图像比例： 8：6
     plt.scatter(Xi,Yi,color="green",label="样本数据",linewidth=2) 
 
     #画拟合直线
+    X_min,X_max = 15,50
+    Y_min,Y_max = 44,54
     plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']  # 指定默认字体
     plt.rcParams['axes.unicode_minus'] = False  # 解决保存图像是负号'-'显示为方块的问题
-    x=np.linspace(30,70,100) ##返回30-70之间100个均匀点
+    x=np.linspace(X_min,X_max,100) ##返回30-70之间100个均匀点
     y=k*x+b ##函数式，我们得到一个对应于x的y的列表
     plt.plot(x,y,color="red",label="拟合直线",linewidth=2) 
     plt.xlabel('温度/摄氏度')   #x轴名称
-    plt.ylabel('电阻/欧姆')
+    plt.ylabel('电阻/x10^4欧姆')
     plt.title("铜电阻的温度特性曲线")
-    plt.xticks(np.arange(30,71,5),["{:.2f}".format(i) for i in np.arange(30,71,5)])     #x刻度绘制
-    plt.yticks(np.arange(55,66,1),["{:.1f}".format(i) for i in np.arange(55,66,1)])
+    plt.xticks(np.arange(X_min,X_max+1,5),["{:.1f}".format(i) for i in np.arange(X_min,X_max+1,5)])     #x刻度绘制
+    plt.yticks(np.arange(Y_min,Y_max,1),["{:.2f}".format(i) for i in np.arange(Y_min,Y_max,1)])
     plt.legend(loc='lower right') #绘制图例
     plt.show()
 
 if __name__ == "__main__":
     main()
+    
